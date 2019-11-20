@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
+import DatePicker from 'react-date-picker';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class ResumeForm extends React.Component {
       yearOfPassing: '',
       aggregate: '',
       otherSkills: '',
-      dateOfBirth: '',
+      dateOfBirth: undefined,
       gender: '',
       maritalStatus: '',
       hobbies: '',
@@ -34,13 +35,16 @@ class ResumeForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(date) {
+    this.setState({ dateOfBirth: new Date(date) });
   }
 
   handleChange(event) {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    this.setState({ [name]: value });
   }
 
   handleSubmit(event) {
@@ -230,12 +234,15 @@ class ResumeForm extends React.Component {
                 <div className='personal-details'>
                   <h2 className='section-header'>Personal Details</h2>
                   <label>Date of Birth: </label>
-                  <input
-                    type='date'
+                  <DatePicker
                     name='dateOfBirth'
-                    id='dateOfBirth'
+                    format='dd-MM-yyyy'
+                    dayPlaceholder='dd'
+                    monthPlaceholder='mm'
+                    yearPlaceholder='yyyy'
+                    clearIcon={null}
                     value={this.state.dateOfBirth}
-                    onChange={this.handleChange}
+                    onChange={this.onChange}
                   />{' '}
                   <br />
                   <label>Gender: </label> <br />
@@ -341,7 +348,10 @@ class ResumeForm extends React.Component {
           {this.state.otherSkills} <br />
           <hr />
           <h2>Personal Details</h2>
-          {this.state.dateOfBirth} <br />
+          {this.state.dateOfBirth
+            ? this.state.dateOfBirth.toLocaleDateString('en-IN')
+            : 'NA'}{' '}
+          <br />
           {this.state.gender} <br />
           {this.state.maritalStatus} <br />
           {this.state.hobbies} <br />
