@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
 import DatePicker from 'react-date-picker';
+import ResumeView from './resume-view.component';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -35,11 +36,6 @@ class ResumeForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(date) {
-    this.setState({ dateOfBirth: new Date(date) });
   }
 
   handleChange(event) {
@@ -341,62 +337,7 @@ class ResumeForm extends React.Component {
             </Link>
           </form>
         </div>
-        <div className='resume-view'>
-          <h1>Resume View</h1>
-          <h2>Contact Details</h2>
-          Name: {this.state.candidateName} <br />
-          Mobile No: {this.state.candidateMobileNo} <br />
-          Email: {this.state.candidateEmail} <br />
-          <br />
-          <hr />
-          <h2>Objectives</h2>
-          {this.state.objective} <br /> <br />
-          <hr />
-          <h2>Professional Experience</h2>
-          {this.state.company} <br />
-          {this.state.designation} <br />
-          {this.state.durationStartDate
-            ? this.state.durationStartDate.toLocaleDateString('en-IN')
-            : 'NA'}{' '}
-          to
-          {this.state.durationEndDate
-            ? this.state.durationEndDate.toLocaleDateString('en-IN')
-            : 'NA'}{' '}
-          <br />
-          {this.state.keyResponsibilities} <br />
-          <h3>Projects</h3>
-          {this.state.projectName} <br />
-          {this.state.projectStartDate
-            ? this.state.projectStartDate.toLocaleDateString('en-IN')
-            : 'NA'}{' '}
-          to
-          {this.state.projectEndDate
-            ? this.state.projectEndDate.toLocaleDateString('en-IN')
-            : 'NA'}{' '}
-          <br />
-          {this.state.projectDetails} <br />
-          <hr />
-          <h2>Academic Credentials</h2>
-          {this.state.course} <br />
-          {this.state.institute} <br />
-          {this.state.university} <br />
-          {this.state.yearOfPassing} <br />
-          {this.state.aggregate} <br />
-          <hr />
-          <h2>Other Skills</h2>
-          {this.state.otherSkills} <br />
-          <hr />
-          <h2>Personal Details</h2>
-          {this.state.dateOfBirth
-            ? this.state.dateOfBirth.toLocaleDateString('en-IN')
-            : 'NA'}{' '}
-          <br />
-          {this.state.gender} <br />
-          {this.state.maritalStatus} <br />
-          {this.state.hobbies} <br />
-          {this.state.languagesKnown} <br />
-          <hr />
-        </div>
+        <ResumeView {...this.state} />
       </div>
     );
   }
