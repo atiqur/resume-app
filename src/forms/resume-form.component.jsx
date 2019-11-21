@@ -13,12 +13,12 @@ class ResumeForm extends React.Component {
       objective: '',
       company: '',
       designation: '',
-      durationFrom: '',
-      durationTo: '',
+      durationStartDate: undefined,
+      durationEndDate: undefined,
       keyResponsibilities: '',
       projectName: '',
-      projectFrom: '',
-      projectTo: '',
+      projectStartDate: undefined,
+      projectEndDate: undefined,
       projectDetails: '',
       course: '',
       institute: '',
@@ -118,18 +118,30 @@ class ResumeForm extends React.Component {
               <br />
               <label>Duration: </label>
               <span>From: </span>
-              <input
-                type='text'
-                name='durationFrom'
-                value={this.state.durationFrom}
-                onChange={this.handleChange}
-              />
+              <DatePicker
+                name='durationStartDate'
+                format='dd-MM-yyyy'
+                dayPlaceholder='dd'
+                monthPlaceholder='mm'
+                yearPlaceholder='yyyy'
+                clearIcon={null}
+                value={this.state.durationStartDate}
+                onChange={value =>
+                  this.setState({ durationStartDate: new Date(value) })
+                }
+              />{' '}
               <span>To: </span>
-              <input
-                type='text'
-                name='durationTo'
-                value={this.state.durationTo}
-                onChange={this.handleChange}
+              <DatePicker
+                name='durationEndDate'
+                format='dd-MM-yyyy'
+                dayPlaceholder='dd'
+                monthPlaceholder='mm'
+                yearPlaceholder='yyyy'
+                clearIcon={null}
+                value={this.state.durationEndDate}
+                onChange={value =>
+                  this.setState({ durationEndDate: new Date(value) })
+                }
               />{' '}
               <br />
               <label>Key Responsibilities: </label> <br />
@@ -149,21 +161,34 @@ class ResumeForm extends React.Component {
                 name='projectName'
                 value={this.state.projectName}
                 onChange={this.handleChange}
-              />
+              />{' '}
+              <br />
               <label>Duration: </label>
               <label>From: </label>
-              <input
-                type='text'
-                name='projectFrom'
-                value={this.state.projectFrom}
-                onChange={this.handleChange}
-              />
+              <DatePicker
+                name='projectStartDate'
+                format='dd-MM-yyyy'
+                dayPlaceholder='dd'
+                monthPlaceholder='mm'
+                yearPlaceholder='yyyy'
+                clearIcon={null}
+                value={this.state.projectStartDate}
+                onChange={value =>
+                  this.setState({ projectStartDate: new Date(value) })
+                }
+              />{' '}
               <label>To: </label>
-              <input
-                type='text'
-                name='projectTo'
-                value={this.state.projectTo}
-                onChange={this.handleChange}
+              <DatePicker
+                name='projectEndDate'
+                format='dd-MM-yyyy'
+                dayPlaceholder='dd'
+                monthPlaceholder='mm'
+                yearPlaceholder='yyyy'
+                clearIcon={null}
+                value={this.state.projectEndDate}
+                onChange={value =>
+                  this.setState({ projectEndDate: new Date(value) })
+                }
               />{' '}
               <br />
               <label>Project Details: </label> <br />
@@ -242,7 +267,7 @@ class ResumeForm extends React.Component {
                     yearPlaceholder='yyyy'
                     clearIcon={null}
                     value={this.state.dateOfBirth}
-                    onChange={this.onChange}
+                    onChange={value => this.setState({ dateOfBirth: value })}
                   />{' '}
                   <br />
                   <label>Gender: </label> <br />
@@ -330,11 +355,25 @@ class ResumeForm extends React.Component {
           <h2>Professional Experience</h2>
           {this.state.company} <br />
           {this.state.designation} <br />
-          {this.state.durationFrom} to {this.state.durationTo} <br />
+          {this.state.durationStartDate
+            ? this.state.durationStartDate.toLocaleDateString('en-IN')
+            : 'NA'}{' '}
+          to
+          {this.state.durationEndDate
+            ? this.state.durationEndDate.toLocaleDateString('en-IN')
+            : 'NA'}{' '}
+          <br />
           {this.state.keyResponsibilities} <br />
           <h3>Projects</h3>
           {this.state.projectName} <br />
-          {this.state.projectFrom} to {this.state.projectTo} <br />
+          {this.state.projectStartDate
+            ? this.state.projectStartDate.toLocaleDateString('en-IN')
+            : 'NA'}{' '}
+          to
+          {this.state.projectEndDate
+            ? this.state.projectEndDate.toLocaleDateString('en-IN')
+            : 'NA'}{' '}
+          <br />
           {this.state.projectDetails} <br />
           <hr />
           <h2>Academic Credentials</h2>
