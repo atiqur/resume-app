@@ -8,11 +8,19 @@ const ResumeView = props => {
       <h1>Resume View</h1>
       <h2>Contact Details</h2>
       Name: {props.candidateName} <br />
-      Mobile No: {props.candidateMobileNo} <br />
-      Email: {props.candidateEmail} <br />
+      Mobile Nos:{' '}
+      {props.candidateMobileNos
+        .map(mobile => (mobile === undefined ? '' : `${mobile}`))
+        .join(', ')}{' '}
+      <br />
+      Email:{' '}
+      {props.candidateEmail
+        .map(email => (email === undefined ? '' : `${email}`))
+        .join(', ')}{' '}
+      <br />
       <br />
       <hr />
-      <h2>Objectives</h2>
+      <h2>Objective</h2>
       {props.objective} <br /> <br />
       <hr />
       <h2>Professional Experience</h2>

@@ -9,8 +9,8 @@ class ResumeForm extends React.Component {
     super(props);
     this.state = {
       candidateName: '',
-      candidateMobileNo: '',
-      candidateEmail: '',
+      candidateMobileNos: [undefined],
+      candidateEmail: [undefined],
       objective: '',
       company: '',
       designation: '',
@@ -47,6 +47,30 @@ class ResumeForm extends React.Component {
     event.preventDefault();
   }
 
+  handleMobileNos = event => {
+    let candidateMobileNos = [...this.state.candidateMobileNos];
+    candidateMobileNos[event.target.dataset.id] = event.target.value;
+    this.setState({ candidateMobileNos });
+  };
+
+  handleEmails = event => {
+    let candidateEmail = [...this.state.candidateEmail];
+    candidateEmail[event.target.dataset.id] = event.target.value;
+    this.setState({ candidateEmail });
+  };
+
+  addMobile = e => {
+    this.setState(prevState => ({
+      candidateMobileNos: [...prevState.candidateMobileNos, undefined]
+    }));
+  };
+
+  addEmail = e => {
+    this.setState(prevState => ({
+      candidateEmail: [...prevState.candidateEmail, undefined]
+    }));
+  };
+
   render() {
     return (
       <div className='resume-container'>
@@ -63,21 +87,42 @@ class ResumeForm extends React.Component {
                 onChange={this.handleChange}
               />{' '}
               <br />
-              <label>Mobile No.:</label>
-              <input
-                type='number'
-                name='candidateMobileNo'
-                value={this.state.candidateMobileNo}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Email: </label>
-              <input
-                type='email'
-                name='candidateEmail'
-                value={this.state.candidateEmail}
-                onChange={this.handleChange}
-              />
+              {this.state.candidateMobileNos.map((val, idx) => {
+                let mobileId = `mobile-${idx}`;
+                return (
+                  <div key={idx}>
+                    <label htmlFor={mobileId}>{`Mobile #${idx + 1}`}</label>
+                    <input
+                      type='text'
+                      name={mobileId}
+                      data-id={idx}
+                      id={mobileId}
+                      value={mobileId[idx].val}
+                      className='candidateMobileNos'
+                      onChange={this.handleMobileNos}
+                    />
+                  </div>
+                );
+              })}
+              <button onClick={this.addMobile}>Add Mobile Number</button> <br />
+              {this.state.candidateEmail.map((val, idx) => {
+                let emailId = `email-${idx}`;
+                return (
+                  <div key={idx}>
+                    <label htmlFor={emailId}>{`Email #${idx + 1}`}</label>
+                    <input
+                      type='email'
+                      name={emailId}
+                      data-id={idx}
+                      id={emailId}
+                      value={emailId[idx].val}
+                      className='candidateEmail'
+                      onChange={this.handleEmails}
+                    />
+                  </div>
+                );
+              })}
+              <button onClick={this.addEmail}>Add Email</button> <br />
             </div>{' '}
             <br />
             <hr />
