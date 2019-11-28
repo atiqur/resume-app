@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
 import DatePicker from 'react-date-picker';
 import ResumeView from './resume-view.component';
+import DynamicInput from '../components/dynamic-input';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -87,41 +88,19 @@ class ResumeForm extends React.Component {
                 onChange={this.handleChange}
               />{' '}
               <br />
-              {this.state.candidateMobileNos.map((val, idx) => {
-                let mobileId = `mobile-${idx}`;
-                return (
-                  <div key={idx}>
-                    <label htmlFor={mobileId}>{`Mobile #${idx + 1}`}</label>
-                    <input
-                      type='text'
-                      name={mobileId}
-                      data-id={idx}
-                      id={mobileId}
-                      value={mobileId[idx].val}
-                      className='candidateMobileNos'
-                      onChange={this.handleMobileNos}
-                    />
-                  </div>
-                );
-              })}
+              <DynamicInput
+                name='candidateMobileNo'
+                fieldState={this.state.candidateMobileNos}
+                onChange={this.handleMobileNos}
+                field='mobile'
+              />
               <button onClick={this.addMobile}>Add Mobile Number</button> <br />
-              {this.state.candidateEmail.map((val, idx) => {
-                let emailId = `email-${idx}`;
-                return (
-                  <div key={idx}>
-                    <label htmlFor={emailId}>{`Email #${idx + 1}`}</label>
-                    <input
-                      type='email'
-                      name={emailId}
-                      data-id={idx}
-                      id={emailId}
-                      value={emailId[idx].val}
-                      className='candidateEmail'
-                      onChange={this.handleEmails}
-                    />
-                  </div>
-                );
-              })}
+              <DynamicInput
+                name='candidateEmail'
+                fieldState={this.state.candidateEmail}
+                onChange={this.handleEmails}
+                field='email'
+              />
               <button onClick={this.addEmail}>Add Email</button> <br />
             </div>{' '}
             <br />
