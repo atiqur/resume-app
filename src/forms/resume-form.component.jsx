@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
 import DatePicker from 'react-date-picker';
 import ResumeView from './resume-view.component';
-import DynamicInput from '../components/dynamic-input';
+import AddInput from '../components/add-input';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -39,6 +39,62 @@ class ResumeForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // addInput(type, name, eventHandler, stateField, removeField) {
+  //   return stateField.map((el, i) => (
+  //     <div key={i}>
+  //       <label htmlFor={name}>
+  //         {name}#{i + 1}
+  //       </label>
+  //       <input
+  //         type={type}
+  //         value={el || ''}
+  //         onChange={eventHandler.bind(this, i)}
+  //       />
+  //       <input
+  //         type='button'
+  //         value='remove'
+  //         onClick={removeField.bind(this, i)}
+  //       />
+  //     </div>
+  //   ));
+  // }
+
+  handleMobileNos(i, event) {
+    let candidateMobileNos = [...this.state.candidateMobileNos];
+    candidateMobileNos[i] = event.target.value;
+    this.setState({ candidateMobileNos });
+  }
+
+  handleEmails(i, event) {
+    let candidateEmail = [...this.state.candidateEmail];
+    candidateEmail[i] = event.target.value;
+    this.setState({ candidateEmail });
+  }
+
+  addMobile() {
+    this.setState(prevState => ({
+      candidateMobileNos: [...prevState.candidateMobileNos, '']
+    }));
+  }
+
+  addEmail() {
+    this.setState(prevState => ({
+      candidateEmail: [...prevState.candidateEmail, '']
+    }));
+  }
+
+  removeMobile(i) {
+    let candidateMobileNos = [...this.state.candidateMobileNos];
+    candidateMobileNos.splice(i, 1);
+    this.setState({ candidateMobileNos });
+  }
+
+  removeEmail(i) {
+    let candidateEmail = [...this.state.candidateEmail];
+    candidateEmail.splice(i, 1);
+    this.setState({ candidateEmail });
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -48,29 +104,29 @@ class ResumeForm extends React.Component {
     event.preventDefault();
   }
 
-  handleMobileNos = event => {
-    let candidateMobileNos = [...this.state.candidateMobileNos];
-    candidateMobileNos[event.target.dataset.id] = event.target.value;
-    this.setState({ candidateMobileNos });
-  };
+  // handleMobileNos = event => {
+  //   let candidateMobileNos = [...this.state.candidateMobileNos];
+  //   candidateMobileNos[event.target.dataset.id] = event.target.value;
+  //   this.setState({ candidateMobileNos });
+  // };
 
-  handleEmails = event => {
-    let candidateEmail = [...this.state.candidateEmail];
-    candidateEmail[event.target.dataset.id] = event.target.value;
-    this.setState({ candidateEmail });
-  };
+  // handleEmails = event => {
+  //   let candidateEmail = [...this.state.candidateEmail];
+  //   candidateEmail[event.target.dataset.id] = event.target.value;
+  //   this.setState({ candidateEmail });
+  // };
 
-  addMobile = e => {
-    this.setState(prevState => ({
-      candidateMobileNos: [...prevState.candidateMobileNos, undefined]
-    }));
-  };
+  // addMobile = e => {
+  //   this.setState(prevState => ({
+  //     candidateMobileNos: [...prevState.candidateMobileNos, undefined]
+  //   }));
+  // };
 
-  addEmail = e => {
-    this.setState(prevState => ({
-      candidateEmail: [...prevState.candidateEmail, undefined]
-    }));
-  };
+  // addEmail = e => {
+  //   this.setState(prevState => ({
+  //     candidateEmail: [...prevState.candidateEmail, undefined]
+  //   }));
+  // };
 
   render() {
     return (
@@ -88,20 +144,48 @@ class ResumeForm extends React.Component {
                 onChange={this.handleChange}
               />{' '}
               <br />
-              <DynamicInput
+              {/* <DynamicInput
                 name='candidateMobileNo'
+                type='number'
                 fieldState={this.state.candidateMobileNos}
                 onChange={this.handleMobileNos}
+                onRemove={this.removeClick}
                 field='mobile'
+              /> */}
+              {/* <button onClick={this.addMobile}>Add Mobile Number</button> <br />{' '} */}
+              {/* {this.addInput(
+                'number',
+                'Mobile',
+                this.handleMobileNos,
+                this.state.candidateMobileNos,
+                this.removeMobile
+              )} */}
+              <AddInput
+                type='number'
+                name='Mobile'
+                eventHandler={this.handleMobileNos.bind(this)}
+                stateField={this.state.candidateMobileNos}
+                removeField={this.removeMobile.bind(this)}
               />
-              <button onClick={this.addMobile}>Add Mobile Number</button> <br />
-              <DynamicInput
-                name='candidateEmail'
-                fieldState={this.state.candidateEmail}
-                onChange={this.handleEmails}
-                field='email'
+              <input
+                type='button'
+                value='Add Mobile'
+                onClick={this.addMobile.bind(this)}
+              />{' '}
+              <br />
+              <AddInput
+                type='email'
+                name='Email'
+                eventHandler={this.handleEmails.bind(this)}
+                stateField={this.state.candidateEmail}
+                removeField={this.removeEmail.bind(this)}
               />
-              <button onClick={this.addEmail}>Add Email</button> <br />
+              <input
+                type='button'
+                value='Add Email'
+                onClick={this.addEmail.bind(this)}
+              />{' '}
+              <br />
             </div>{' '}
             <br />
             <hr />
