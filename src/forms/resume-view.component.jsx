@@ -24,17 +24,36 @@ const ResumeView = props => {
       {props.objective} <br /> <br />
       <hr />
       <h2>Professional Experience</h2>
-      {props.company} <br />
-      {props.designation} <br />
-      {props.durationStartDate
-        ? props.durationStartDate.toLocaleDateString('en-IN')
-        : 'NA'}{' '}
-      to
-      {props.durationEndDate
-        ? props.durationEndDate.toLocaleDateString('en-IN')
-        : 'NA'}{' '}
+      {props.experience.map(e => {
+        if (!e.durationStartDate) {
+          var textDurationStartDate = 'NA';
+        } else {
+          var textDurationStartDate = e.durationStartDate.toLocaleDateString(
+            'en-IN'
+          );
+        }
+        if (!e.durationEndDate) {
+          var textDurationEndDate = 'NA';
+        } else {
+          var textDurationEndDate = e.durationEndDate.toLocaleDateString(
+            'en-IN'
+          );
+        }
+
+        let text = `Company: ${e.companyName} \n
+          Designation: ${e.designation} \n
+          Key Responsibilities: ${e.keyResponsibilities} \n
+          Duration From: ${textDurationStartDate} to ${textDurationEndDate} \n
+          Current Company: ${e.isCurrentCompany} \n
+          `;
+
+        let textInNewLines = text.split('\n').map(i => {
+          return <p>{i}</p>;
+        });
+
+        return textInNewLines;
+      })}{' '}
       <br />
-      {props.keyResponsibilities} <br />
       <h3>Projects</h3>
       {props.projectName} <br />
       {props.projectStartDate

@@ -4,6 +4,8 @@ import './resume-form.styles.css';
 import DatePicker from 'react-date-picker';
 import ResumeView from './resume-view.component';
 import AddInput from '../components/add-input';
+import AddMultipleInput from '../components/add-multiple-input.component';
+import AddExperience from '../components/add-experience.component';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -13,11 +15,16 @@ class ResumeForm extends React.Component {
       candidateMobileNos: [undefined],
       candidateEmail: [undefined],
       objective: '',
-      company: '',
-      designation: '',
-      durationStartDate: undefined,
-      durationEndDate: undefined,
-      keyResponsibilities: '',
+      experience: [
+        {
+          companyName: '',
+          designation: '',
+          durationStartDate: undefined,
+          isCurrentCompany: false,
+          durationEndDate: undefined,
+          keyResponsibilities: ''
+        }
+      ],
       projectName: '',
       projectStartDate: undefined,
       projectEndDate: undefined,
@@ -37,6 +44,7 @@ class ResumeForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleExperience = this.handleExperience.bind(this);
   }
 
   // addInput(type, name, eventHandler, stateField, removeField) {
@@ -57,6 +65,12 @@ class ResumeForm extends React.Component {
   //       />
   //     </div>
   //   ));
+  // }
+
+  // handleInput(i, e) {
+  //   [e.target.name] = e.target.name;
+  //   [e.target.name[i]] = e.target.value;
+  //   this.setState( prevState => ( ...prevState,  [e.target.name[i]]: value )
   // }
 
   handleMobileNos(i, event) {
@@ -98,6 +112,31 @@ class ResumeForm extends React.Component {
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  handleExperience(i, event) {
+    const { name, value } = event.target;
+    let experience = [...this.state.experience];
+    if (name == 'companyName') {
+      experience[i].companyName = value;
+    } else if (name === 'designation') {
+      experience[i].designation = value;
+    } else if (name === 'keyResponsibilities') {
+      experience[i].keyResponsibilities = value;
+    }
+    this.setState({ experience });
+  }
+
+  addExperience() {
+    this.setState(prevState => ({
+      experience: [...prevState.experience, {}]
+    }));
+  }
+
+  removeExperience(i) {
+    let experience = [...this.state.experience];
+    experience.splice(i, 1);
+    this.setState({ experience });
   }
 
   handleSubmit(event) {
@@ -161,8 +200,8 @@ class ResumeForm extends React.Component {
                 this.removeMobile
               )} */}
               <AddInput
-                type='number'
-                name='Mobile'
+                type={'number'}
+                name={'Mobile'}
                 eventHandler={this.handleMobileNos.bind(this)}
                 stateField={this.state.candidateMobileNos}
                 removeField={this.removeMobile.bind(this)}
@@ -191,71 +230,39 @@ class ResumeForm extends React.Component {
             <hr />
             <div className='objective'>
               <h2 className='section-header'>Objective</h2>
-              <textarea
+              <AddMultipleInput
                 name='objective'
-                id='objective'
+                type='textarea'
                 cols='30'
                 rows='10'
                 value={this.state.objective}
-                onChange={this.handleChange}
+                eventHandler={this.handleChange.bind(this)}
               />
             </div>{' '}
             <br />
             <hr />
             <div className='professional-experience'>
               <h2 className='section-header'>Professional Experience</h2>
-              <label>Company: </label>
+              <AddExperience
+                stateValue={this.state.experience}
+                onChange={this.handleExperience.bind(this)}
+                changeStartDate={(value, i) => {
+                  let experience = [...this.state.experience];
+                  experience[i].durationStartDate = new Date(value);
+                  this.setState({ experience });
+                }}
+                changeEndDate={(value, i) => {
+                  let experience = [...this.state.experience];
+                  experience[i].durationEndDate = new Date(value);
+                  this.setState({ experience });
+                }}
+                removeExperience={this.removeExperience.bind(this)}
+              />
+              <br />
               <input
-                type='text'
-                name='company'
-                value={this.state.company}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Designation: </label>
-              <input
-                type='text'
-                name='designation'
-                value={this.state.designation}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Duration: </label>
-              <span>From: </span>
-              <DatePicker
-                name='durationStartDate'
-                format='dd-MM-yyyy'
-                dayPlaceholder='dd'
-                monthPlaceholder='mm'
-                yearPlaceholder='yyyy'
-                clearIcon={null}
-                value={this.state.durationStartDate}
-                onChange={value =>
-                  this.setState({ durationStartDate: new Date(value) })
-                }
-              />{' '}
-              <span>To: </span>
-              <DatePicker
-                name='durationEndDate'
-                format='dd-MM-yyyy'
-                dayPlaceholder='dd'
-                monthPlaceholder='mm'
-                yearPlaceholder='yyyy'
-                clearIcon={null}
-                value={this.state.durationEndDate}
-                onChange={value =>
-                  this.setState({ durationEndDate: new Date(value) })
-                }
-              />{' '}
-              <br />
-              <label>Key Responsibilities: </label> <br />
-              <textarea
-                name='keyResponsibilities'
-                id='keyResponsibilities'
-                cols='30'
-                rows='10'
-                value={this.state.keyResponsibilities}
-                onChange={this.handleChange}
+                type='button'
+                value='Add Experience'
+                onClick={this.addExperience.bind(this)}
               />{' '}
               <br />
               <h3>Projects: </h3>
