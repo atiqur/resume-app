@@ -14,7 +14,6 @@ function App() {
       <Header />
       <Switch>
         <Route exact path='/' component={ResumeForm} />
-        <Route path='/resume-view' component={ResumeView} />
       </Switch>
     </div>
   );

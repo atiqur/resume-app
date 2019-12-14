@@ -465,7 +465,7 @@ class ResumeForm extends React.Component {
                 </select>
               </div>
             </div>
-            <Link className='resume-form-button' to='/resume-view'>
+            <Link className='resume-form-button'>
               <button>
                 <h1>Next --></h1>
               </button>
