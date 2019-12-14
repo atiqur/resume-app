@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
-import DatePicker from 'react-date-picker';
 import ResumeView from './resume-view.component';
 import AddInput from '../components/add-input';
 import AddMultipleInput from '../components/add-multiple-input.component';
 import AddExperience from '../components/add-experience.component';
 import AddEducation from '../components/add-education.component';
+import AddPersonalDetails from '../components/add-personal-details.component';
+import { trimExt } from 'upath';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -320,48 +321,7 @@ class ResumeForm extends React.Component {
               <br />
             </div>
             <hr />
-            {/* <div className='academic-credentials'>
-              <h2 className='section-header'>Academic Credentials</h2>
-              <label>Course</label>
-              <input
-                type='text'
-                name='course'
-                value={this.state.course}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Institute</label>
-              <input
-                type='text'
-                name='institute'
-                value={this.state.institute}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>University</label>
-              <input
-                type='text'
-                name='university'
-                value={this.state.university}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Year of Passing</label>
-              <input
-                type='text'
-                name='yearOfPassing'
-                value={this.state.yearOfPassing}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Aggregate</label>
-              <input
-                type='text'
-                name='aggregate'
-                value={this.state.aggregate}
-                onChange={this.handleChange}
-              />{' '}
-              <br /> */}
+            {/* Educational Qualification */}
             <div className='educational-qualification'>
               <h2 className='section-header'>Educational Qualification</h2>
               <AddEducation
@@ -377,6 +337,7 @@ class ResumeForm extends React.Component {
               />{' '}
             </div>
             <hr />
+            {/* Other Skills */}
             <div className='other-skills'>
               <h2 className='section-header'>Other Skills</h2>
               <textarea
@@ -388,83 +349,14 @@ class ResumeForm extends React.Component {
                 onChange={this.handleChange}
               />
               <hr />
-              <div className='personal-details'>
-                <h2 className='section-header'>Personal Details</h2>
-                <label>Date of Birth: </label>
-                <DatePicker
-                  name='dateOfBirth'
-                  format='dd-MM-yyyy'
-                  dayPlaceholder='dd'
-                  monthPlaceholder='mm'
-                  yearPlaceholder='yyyy'
-                  clearIcon={null}
-                  value={this.state.dateOfBirth}
-                  onChange={value => this.setState({ dateOfBirth: value })}
-                />{' '}
-                <br />
-                <label>Gender: </label> <br />
-                <input
-                  type='radio'
-                  name='gender'
-                  id='gender'
-                  value='male'
-                  checked={this.state.gender === 'male'}
-                  onChange={this.handleChange}
-                />{' '}
-                Male <br />
-                <input
-                  type='radio'
-                  name='gender'
-                  id='gender'
-                  value='female'
-                  checked={this.state.gender === 'female'}
-                  onChange={this.handleChange}
-                />{' '}
-                Female <br />
-                <input
-                  type='radio'
-                  name='gender'
-                  id='gender'
-                  value='other'
-                  checked={this.state.gender === 'other'}
-                  onChange={this.handleChange}
-                />{' '}
-                Other <br />
-                <label>Marital Status: </label>
-                <input
-                  type='radio'
-                  name='maritalStatus'
-                  id='maritalStatus'
-                  value='married'
-                  checked={this.state.maritalStatus === 'married'}
-                  onChange={this.handleChange}
-                />{' '}
-                Married{' '}
-                <input
-                  type='radio'
-                  name='maritalStatus'
-                  id='maritalStatus'
-                  value='single'
-                  onChange={this.handleChange}
-                />{' '}
-                Single <br />
-                <label>Hobbies: </label>
-                <input
-                  type='text'
-                  name='hobbies'
-                  id='hobbies'
-                  value={this.state.hobbies}
-                  onChange={this.handleChange}
-                />{' '}
-                <br />
-                <label>Languages Known: </label>
-                <select name='languagesKnown' onChange={this.handleChange}>
-                  <option value='english'>English</option>
-                  <option value='hindi'>Hindi</option>
-                  <option value='assamese'>Assamese</option>
-                </select>
-              </div>
             </div>
+            {/* Personal Details */}
+            <AddPersonalDetails
+              name='personal-details'
+              handleDOB={value => this.setState({ dateOfBirth: value })}
+              state={this.state}
+              handleChange={this.handleChange.bind(this)}
+            />
             <Link className='resume-form-button'>
               <button>
                 <h1>Next --></h1>
