@@ -91,11 +91,15 @@ const ResumeView = props => {
       {props.projectDetails} <br /> */}
       <hr />
       <h2>Academic Credentials</h2>
-      {props.course} <br />
-      {props.institute} <br />
-      {props.university} <br />
-      {props.yearOfPassing} <br />
-      {props.aggregate} <br />
+      {props.education.map((e, i) => (
+        <div key={i}>
+          <p>Course: {e.course}</p>
+          <p>Institute: {e.institute}</p>
+          <p>University / Board: {e.university}</p>
+          <p>Year: {e.yearOfPassing}</p>
+          <p>Aggreggate: {e.aggregate}</p>
+        </div>
+      ))}
       <hr />
       <h2>Other Skills</h2>
       {props.otherSkills} <br />

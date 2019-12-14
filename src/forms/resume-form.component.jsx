@@ -6,11 +6,13 @@ import ResumeView from './resume-view.component';
 import AddInput from '../components/add-input';
 import AddMultipleInput from '../components/add-multiple-input.component';
 import AddExperience from '../components/add-experience.component';
+import AddEducation from '../components/add-education.component';
 
 class ResumeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: '',
       candidateName: '',
       candidateMobileNos: [undefined],
       candidateEmail: [undefined],
@@ -34,11 +36,15 @@ class ResumeForm extends React.Component {
           // ]
         }
       ],
-      course: '',
-      institute: '',
-      university: '',
-      yearOfPassing: '',
-      aggregate: '',
+      education: [
+        {
+          course: '',
+          institute: '',
+          university: '',
+          yearOfPassing: '',
+          aggregate: ''
+        }
+      ],
       otherSkills: '',
       dateOfBirth: undefined,
       gender: '',
@@ -50,6 +56,7 @@ class ResumeForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleExperience = this.handleExperience.bind(this);
+    this.handleEducation = this.handleEducation.bind(this);
   }
 
   // addInput(type, name, eventHandler, stateField, removeField) {
@@ -122,14 +129,10 @@ class ResumeForm extends React.Component {
   handleExperience(i, event) {
     const { name, value } = event.target;
     let experience = [...this.state.experience];
-    if (name == 'companyName') {
-      experience[i].companyName = value;
-    } else if (name === 'designation') {
-      experience[i].designation = value;
-    } else if (name === 'keyResponsibilities') {
-      experience[i].keyResponsibilities = value;
-    } else if (name === 'isCurrentCompany') {
+    if (name === 'isCurrentCompany') {
       experience[i].isCurrentCompany = !experience[i].isCurrentCompany;
+    } else {
+      experience[i][name] = value;
     }
     this.setState({ experience });
   }
@@ -144,6 +147,25 @@ class ResumeForm extends React.Component {
     let experience = [...this.state.experience];
     experience.splice(i, 1);
     this.setState({ experience });
+  }
+
+  handleEducation(i, event) {
+    const { name, value } = event.target;
+    let education = [...this.state.education];
+    education[i][name] = value;
+    this.setState({ education });
+  }
+
+  addEducation() {
+    this.setState(prevState => ({
+      education: [...prevState.education, {}]
+    }));
+  }
+
+  removeEducation(i) {
+    let education = [...this.state.education];
+    education.splice(i, 1);
+    this.setState({ education });
   }
 
   // addProject() {
@@ -296,10 +318,9 @@ class ResumeForm extends React.Component {
                 onClick={this.addExperience.bind(this)}
               />{' '}
               <br />
-              {/* Projects Handled */}
             </div>
             <hr />
-            <div className='academic-credentials'>
+            {/* <div className='academic-credentials'>
               <h2 className='section-header'>Academic Credentials</h2>
               <label>Course</label>
               <input
@@ -340,95 +361,108 @@ class ResumeForm extends React.Component {
                 value={this.state.aggregate}
                 onChange={this.handleChange}
               />{' '}
+              <br /> */}
+            <div className='educational-qualification'>
+              <h2 className='section-header'>Educational Qualification</h2>
+              <AddEducation
+                stateValue={this.state.education}
+                onChange={this.handleEducation.bind(this)}
+                removeEducation={this.removeEducation.bind(this)}
+              />
               <br />
+              <input
+                type='button'
+                value='Add Education'
+                onClick={this.addEducation.bind(this)}
+              />{' '}
+            </div>
+            <hr />
+            <div className='other-skills'>
+              <h2 className='section-header'>Other Skills</h2>
+              <textarea
+                name='otherSkills'
+                id='otherSkills'
+                cols='30'
+                rows='10'
+                value={this.state.otherSkills}
+                onChange={this.handleChange}
+              />
               <hr />
-              <div className='other-skills'>
-                <h2 className='section-header'>Other Skills</h2>
-                <textarea
-                  name='otherSkills'
-                  id='otherSkills'
-                  cols='30'
-                  rows='10'
-                  value={this.state.otherSkills}
+              <div className='personal-details'>
+                <h2 className='section-header'>Personal Details</h2>
+                <label>Date of Birth: </label>
+                <DatePicker
+                  name='dateOfBirth'
+                  format='dd-MM-yyyy'
+                  dayPlaceholder='dd'
+                  monthPlaceholder='mm'
+                  yearPlaceholder='yyyy'
+                  clearIcon={null}
+                  value={this.state.dateOfBirth}
+                  onChange={value => this.setState({ dateOfBirth: value })}
+                />{' '}
+                <br />
+                <label>Gender: </label> <br />
+                <input
+                  type='radio'
+                  name='gender'
+                  id='gender'
+                  value='male'
+                  checked={this.state.gender === 'male'}
                   onChange={this.handleChange}
-                />
-                <hr />
-                <div className='personal-details'>
-                  <h2 className='section-header'>Personal Details</h2>
-                  <label>Date of Birth: </label>
-                  <DatePicker
-                    name='dateOfBirth'
-                    format='dd-MM-yyyy'
-                    dayPlaceholder='dd'
-                    monthPlaceholder='mm'
-                    yearPlaceholder='yyyy'
-                    clearIcon={null}
-                    value={this.state.dateOfBirth}
-                    onChange={value => this.setState({ dateOfBirth: value })}
-                  />{' '}
-                  <br />
-                  <label>Gender: </label> <br />
-                  <input
-                    type='radio'
-                    name='gender'
-                    id='gender'
-                    value='male'
-                    checked={this.state.gender === 'male'}
-                    onChange={this.handleChange}
-                  />{' '}
-                  Male <br />
-                  <input
-                    type='radio'
-                    name='gender'
-                    id='gender'
-                    value='female'
-                    checked={this.state.gender === 'female'}
-                    onChange={this.handleChange}
-                  />{' '}
-                  Female <br />
-                  <input
-                    type='radio'
-                    name='gender'
-                    id='gender'
-                    value='other'
-                    checked={this.state.gender === 'other'}
-                    onChange={this.handleChange}
-                  />{' '}
-                  Other <br />
-                  <label>Marital Status: </label>
-                  <input
-                    type='radio'
-                    name='maritalStatus'
-                    id='maritalStatus'
-                    value='married'
-                    checked={this.state.maritalStatus === 'married'}
-                    onChange={this.handleChange}
-                  />{' '}
-                  Married{' '}
-                  <input
-                    type='radio'
-                    name='maritalStatus'
-                    id='maritalStatus'
-                    value='single'
-                    onChange={this.handleChange}
-                  />{' '}
-                  Single <br />
-                  <label>Hobbies: </label>
-                  <input
-                    type='text'
-                    name='hobbies'
-                    id='hobbies'
-                    value={this.state.hobbies}
-                    onChange={this.handleChange}
-                  />{' '}
-                  <br />
-                  <label>Languages Known: </label>
-                  <select name='languagesKnown' onChange={this.handleChange}>
-                    <option value='english'>English</option>
-                    <option value='hindi'>Hindi</option>
-                    <option value='assamese'>Assamese</option>
-                  </select>
-                </div>
+                />{' '}
+                Male <br />
+                <input
+                  type='radio'
+                  name='gender'
+                  id='gender'
+                  value='female'
+                  checked={this.state.gender === 'female'}
+                  onChange={this.handleChange}
+                />{' '}
+                Female <br />
+                <input
+                  type='radio'
+                  name='gender'
+                  id='gender'
+                  value='other'
+                  checked={this.state.gender === 'other'}
+                  onChange={this.handleChange}
+                />{' '}
+                Other <br />
+                <label>Marital Status: </label>
+                <input
+                  type='radio'
+                  name='maritalStatus'
+                  id='maritalStatus'
+                  value='married'
+                  checked={this.state.maritalStatus === 'married'}
+                  onChange={this.handleChange}
+                />{' '}
+                Married{' '}
+                <input
+                  type='radio'
+                  name='maritalStatus'
+                  id='maritalStatus'
+                  value='single'
+                  onChange={this.handleChange}
+                />{' '}
+                Single <br />
+                <label>Hobbies: </label>
+                <input
+                  type='text'
+                  name='hobbies'
+                  id='hobbies'
+                  value={this.state.hobbies}
+                  onChange={this.handleChange}
+                />{' '}
+                <br />
+                <label>Languages Known: </label>
+                <select name='languagesKnown' onChange={this.handleChange}>
+                  <option value='english'>English</option>
+                  <option value='hindi'>Hindi</option>
+                  <option value='assamese'>Assamese</option>
+                </select>
               </div>
             </div>
             <Link className='resume-form-button' to='/resume-view'>

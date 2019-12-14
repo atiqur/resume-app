@@ -61,6 +61,7 @@ const AddExperience = props => {
         name='keyResponsibilities'
         cols='30'
         rows='10'
+        value={e.keyResponsibilities || ''}
         onChange={props.onChange.bind(this, i)}
       />{' '}
       <br />
