@@ -23,12 +23,17 @@ class ResumeForm extends React.Component {
           isCurrentCompany: false,
           durationEndDate: undefined,
           keyResponsibilities: ''
+          // hasProjects: true,
+          // projects: [
+          //   {
+          //     projectName: '',
+          //     projectStartDate: undefined,
+          //     projectEndDate: undefined,
+          //     projectDetails: ''
+          //   }
+          // ]
         }
       ],
-      projectName: '',
-      projectStartDate: undefined,
-      projectEndDate: undefined,
-      projectDetails: '',
       course: '',
       institute: '',
       university: '',
@@ -123,6 +128,8 @@ class ResumeForm extends React.Component {
       experience[i].designation = value;
     } else if (name === 'keyResponsibilities') {
       experience[i].keyResponsibilities = value;
+    } else if (name === 'isCurrentCompany') {
+      experience[i].isCurrentCompany = !experience[i].isCurrentCompany;
     }
     this.setState({ experience });
   }
@@ -138,6 +145,18 @@ class ResumeForm extends React.Component {
     experience.splice(i, 1);
     this.setState({ experience });
   }
+
+  // addProject() {
+  //   this.setState(prevState => ({
+  //     project: [...prevState.project, {}]
+  //   }));
+  // }
+
+  // removeProject(i, count) {
+  //   let projects = [...this.state.experience[count].projects];
+  //   projects.splice(i, 1);
+  //   this.setState({ projects });
+  // }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -256,6 +275,18 @@ class ResumeForm extends React.Component {
                   experience[i].durationEndDate = new Date(value);
                   this.setState({ experience });
                 }}
+                // handleAddProject={this.addProject.bind(this)}
+                // changeProjectStartDate={(value, i, count) => {
+                //   let projects = [...this.state.experience[count].projects];
+                //   projects[i].projectStartDate = new Date(value);
+                //   this.setState({ projects });
+                // }}
+                // changeProjectEndDate={(value, i, count) => {
+                //   let projects = [...this.state.experience[count].projects];
+                //   projects[i].projectEndDate = new Date(value);
+                //   this.setState({ projects });
+                // }}
+                // removeProject={this.removeProject.bind(this)}
                 removeExperience={this.removeExperience.bind(this)}
               />
               <br />
@@ -265,52 +296,7 @@ class ResumeForm extends React.Component {
                 onClick={this.addExperience.bind(this)}
               />{' '}
               <br />
-              <h3>Projects: </h3>
-              <label>Project Name: </label>
-              <input
-                type='text'
-                name='projectName'
-                value={this.state.projectName}
-                onChange={this.handleChange}
-              />{' '}
-              <br />
-              <label>Duration: </label>
-              <label>From: </label>
-              <DatePicker
-                name='projectStartDate'
-                format='dd-MM-yyyy'
-                dayPlaceholder='dd'
-                monthPlaceholder='mm'
-                yearPlaceholder='yyyy'
-                clearIcon={null}
-                value={this.state.projectStartDate}
-                onChange={value =>
-                  this.setState({ projectStartDate: new Date(value) })
-                }
-              />{' '}
-              <label>To: </label>
-              <DatePicker
-                name='projectEndDate'
-                format='dd-MM-yyyy'
-                dayPlaceholder='dd'
-                monthPlaceholder='mm'
-                yearPlaceholder='yyyy'
-                clearIcon={null}
-                value={this.state.projectEndDate}
-                onChange={value =>
-                  this.setState({ projectEndDate: new Date(value) })
-                }
-              />{' '}
-              <br />
-              <label>Project Details: </label> <br />
-              <textarea
-                name='projectDetails'
-                id='projectDetails'
-                cols='30'
-                rows='10'
-                value={this.state.projectDetails}
-                onChange={this.handleChange}
-              />
+              {/* Projects Handled */}
             </div>
             <hr />
             <div className='academic-credentials'>

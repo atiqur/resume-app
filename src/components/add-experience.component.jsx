@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-date-picker';
+import AddProject from './add-project.component';
 
 const AddExperience = props => {
   return props.stateValue.map((e, i) => (
@@ -39,17 +40,21 @@ const AddExperience = props => {
         value={e.durationStartDate}
         onChange={value => props.changeStartDate(value, i)}
       />{' '}
-      <span>To: </span>
-      <DatePicker
-        name='durationEndDate'
-        format='dd-MM-yyyy'
-        dayPlaceholder='dd'
-        monthPlaceholder='mm'
-        yearPlaceholder='yyyy'
-        clearIcon={null}
-        value={e.durationEndDate}
-        onChange={value => props.changeEndDate(value, i)}
-      />{' '}
+      {e.isCurrentCompany ? null : (
+        <span>
+          <span>To: </span>
+          <DatePicker
+            name='durationEndDate'
+            format='dd-MM-yyyy'
+            dayPlaceholder='dd'
+            monthPlaceholder='mm'
+            yearPlaceholder='yyyy'
+            clearIcon={null}
+            value={e.durationEndDate}
+            onChange={value => props.changeEndDate(value, i)}
+          />
+        </span>
+      )}{' '}
       <br />
       <label>Key Responsibilities: </label> <br />
       <textarea
@@ -59,6 +64,21 @@ const AddExperience = props => {
         onChange={props.onChange.bind(this, i)}
       />{' '}
       <br />
+      {/* <AddProject
+        name='projects'
+        projects={e.projects}
+        onChange={props.onChange.bind(this, i)}
+        changeProjectStartDate={value => props.changeProjectStartDate(value, i)}
+        changeProjectEndDate={value => props.changeProjectEndDate(value, i)}
+        removeProject={props.removeProject.bind(this, i)}
+      />
+      <br />
+      <input
+        type='button'
+        value='Add Project'
+        onClick={props.handleAddProject.bind(this)}
+      />{' '}
+      <br /> */}
       <input
         type='button'
         value='Remove'
