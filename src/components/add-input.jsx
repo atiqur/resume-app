@@ -8,7 +8,7 @@ const AddInput = ({ type, name, stateField, eventHandler, removeField }) => {
         value={el || ''}
         onChange={eventHandler.bind(this, i)}
       />
-      {i === 0 && name != 'languagesKnown' ? (
+      {i === 0 && name !== 'languagesKnown' ? (
         ''
       ) : (
         <input
