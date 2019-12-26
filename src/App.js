@@ -6,7 +6,6 @@ import './App.css';
 // import HomePage from './pages/homepage.component';
 import ResumeForm from './forms/resume-form.component';
 import Header from './components/header/header.component';
-import ResumeView from './forms/resume-view.component';
 
 function App() {
   return (

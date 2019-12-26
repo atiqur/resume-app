@@ -7,7 +7,6 @@ import AddMultipleInput from '../components/add-multiple-input.component';
 import AddExperience from '../components/add-experience.component';
 import AddEducation from '../components/add-education.component';
 import AddPersonalDetails from '../components/add-personal-details.component';
-import { trimExt } from 'upath';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -51,40 +50,15 @@ class ResumeForm extends React.Component {
       gender: '',
       maritalStatus: '',
       hobbies: '',
-      languagesKnown: ''
+      languagesKnown: ['English', 'Hindi']
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleExperience = this.handleExperience.bind(this);
     this.handleEducation = this.handleEducation.bind(this);
+    this.handleLanguage = this.handleLanguage.bind(this);
   }
-
-  // addInput(type, name, eventHandler, stateField, removeField) {
-  //   return stateField.map((el, i) => (
-  //     <div key={i}>
-  //       <label htmlFor={name}>
-  //         {name}#{i + 1}
-  //       </label>
-  //       <input
-  //         type={type}
-  //         value={el || ''}
-  //         onChange={eventHandler.bind(this, i)}
-  //       />
-  //       <input
-  //         type='button'
-  //         value='remove'
-  //         onClick={removeField.bind(this, i)}
-  //       />
-  //     </div>
-  //   ));
-  // }
-
-  // handleInput(i, e) {
-  //   [e.target.name] = e.target.name;
-  //   [e.target.name[i]] = e.target.value;
-  //   this.setState( prevState => ( ...prevState,  [e.target.name[i]]: value )
-  // }
 
   handleMobileNos(i, event) {
     let candidateMobileNos = [...this.state.candidateMobileNos];
@@ -92,21 +66,9 @@ class ResumeForm extends React.Component {
     this.setState({ candidateMobileNos });
   }
 
-  handleEmails(i, event) {
-    let candidateEmail = [...this.state.candidateEmail];
-    candidateEmail[i] = event.target.value;
-    this.setState({ candidateEmail });
-  }
-
   addMobile() {
     this.setState(prevState => ({
       candidateMobileNos: [...prevState.candidateMobileNos, '']
-    }));
-  }
-
-  addEmail() {
-    this.setState(prevState => ({
-      candidateEmail: [...prevState.candidateEmail, '']
     }));
   }
 
@@ -116,10 +78,44 @@ class ResumeForm extends React.Component {
     this.setState({ candidateMobileNos });
   }
 
+  handleEmails(i, event) {
+    let candidateEmail = [...this.state.candidateEmail];
+    candidateEmail[i] = event.target.value;
+    this.setState({ candidateEmail });
+  }
+
+  addEmail() {
+    this.setState(prevState => ({
+      candidateEmail: [...prevState.candidateEmail, '']
+    }));
+  }
+
   removeEmail(i) {
     let candidateEmail = [...this.state.candidateEmail];
     candidateEmail.splice(i, 1);
     this.setState({ candidateEmail });
+  }
+
+  handleLanguage(i, event) {
+    // const value =
+    // event.target.type === 'checkbox'
+    //   ? event.target.checked
+    //   : event.target.value;
+    let languagesKnown = [...this.state.languagesKnown];
+    languagesKnown[i] = event.target.value;
+    this.setState({ languagesKnown });
+  }
+
+  addLanguage() {
+    this.setState(prevState => ({
+      languagesKnown: [...prevState.languagesKnown, '']
+    }));
+  }
+
+  removeLanguage(i) {
+    let languagesKnown = [...this.state.languagesKnown];
+    languagesKnown.splice(i, 1);
+    this.setState({ languagesKnown });
   }
 
   handleChange(event) {
@@ -169,45 +165,9 @@ class ResumeForm extends React.Component {
     this.setState({ education });
   }
 
-  // addProject() {
-  //   this.setState(prevState => ({
-  //     project: [...prevState.project, {}]
-  //   }));
-  // }
-
-  // removeProject(i, count) {
-  //   let projects = [...this.state.experience[count].projects];
-  //   projects.splice(i, 1);
-  //   this.setState({ projects });
-  // }
-
   handleSubmit(event) {
     event.preventDefault();
   }
-
-  // handleMobileNos = event => {
-  //   let candidateMobileNos = [...this.state.candidateMobileNos];
-  //   candidateMobileNos[event.target.dataset.id] = event.target.value;
-  //   this.setState({ candidateMobileNos });
-  // };
-
-  // handleEmails = event => {
-  //   let candidateEmail = [...this.state.candidateEmail];
-  //   candidateEmail[event.target.dataset.id] = event.target.value;
-  //   this.setState({ candidateEmail });
-  // };
-
-  // addMobile = e => {
-  //   this.setState(prevState => ({
-  //     candidateMobileNos: [...prevState.candidateMobileNos, undefined]
-  //   }));
-  // };
-
-  // addEmail = e => {
-  //   this.setState(prevState => ({
-  //     candidateEmail: [...prevState.candidateEmail, undefined]
-  //   }));
-  // };
 
   render() {
     return (
@@ -225,25 +185,11 @@ class ResumeForm extends React.Component {
                 onChange={this.handleChange}
               />{' '}
               <br />
-              {/* <DynamicInput
-                name='candidateMobileNo'
-                type='number'
-                fieldState={this.state.candidateMobileNos}
-                onChange={this.handleMobileNos}
-                onRemove={this.removeClick}
-                field='mobile'
-              /> */}
-              {/* <button onClick={this.addMobile}>Add Mobile Number</button> <br />{' '} */}
-              {/* {this.addInput(
-                'number',
-                'Mobile',
-                this.handleMobileNos,
-                this.state.candidateMobileNos,
-                this.removeMobile
-              )} */}
+              <label htmlFor='mobile'>Mobile Numbers: </label> <br />
               <AddInput
                 type={'number'}
                 name={'Mobile'}
+                label={'Mobile'}
                 eventHandler={this.handleMobileNos.bind(this)}
                 stateField={this.state.candidateMobileNos}
                 removeField={this.removeMobile.bind(this)}
@@ -254,9 +200,11 @@ class ResumeForm extends React.Component {
                 onClick={this.addMobile.bind(this)}
               />{' '}
               <br />
+              <label htmlFor='email'>Email ID: </label> <br />
               <AddInput
-                type='email'
-                name='Email'
+                type={'email'}
+                name={'Email'}
+                label={'Email'}
                 eventHandler={this.handleEmails.bind(this)}
                 stateField={this.state.candidateEmail}
                 removeField={this.removeEmail.bind(this)}
@@ -298,18 +246,6 @@ class ResumeForm extends React.Component {
                   experience[i].durationEndDate = new Date(value);
                   this.setState({ experience });
                 }}
-                // handleAddProject={this.addProject.bind(this)}
-                // changeProjectStartDate={(value, i, count) => {
-                //   let projects = [...this.state.experience[count].projects];
-                //   projects[i].projectStartDate = new Date(value);
-                //   this.setState({ projects });
-                // }}
-                // changeProjectEndDate={(value, i, count) => {
-                //   let projects = [...this.state.experience[count].projects];
-                //   projects[i].projectEndDate = new Date(value);
-                //   this.setState({ projects });
-                // }}
-                // removeProject={this.removeProject.bind(this)}
                 removeExperience={this.removeExperience.bind(this)}
               />
               <br />
@@ -356,10 +292,13 @@ class ResumeForm extends React.Component {
               handleDOB={value => this.setState({ dateOfBirth: value })}
               state={this.state}
               handleChange={this.handleChange.bind(this)}
+              handleLanguage={this.handleLanguage.bind(this)}
+              removeLanguage={this.removeLanguage.bind(this)}
+              addField={this.addLanguage.bind(this)}
             />
             <Link className='resume-form-button'>
               <button>
-                <h1>Next --></h1>
+                <h3>Next --></h3>
               </button>
             </Link>
           </form>

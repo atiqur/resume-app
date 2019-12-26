@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-date-picker';
+import AddInput from './add-input';
 
 const AddPersonalDetails = props => (
   <div className='personal-details'>
@@ -71,11 +72,21 @@ const AddPersonalDetails = props => (
       onChange={props.handleChange}
     />{' '}
     <br />
-    <label>Languages Known: </label>
-    <select name='languagesKnown' onChange={props.handleChange}>
-      <option value='english'>English</option>
-      <option value='hindi'>Hindi</option>
-    </select>{' '}
+    <label>Languages Known: </label> <br />
+    <AddInput
+      name='languagesKnown'
+      type='text'
+      label='Language'
+      stateField={props.state.languagesKnown}
+      eventHandler={props.handleLanguage.bind(this)}
+      removeField={props.removeLanguage.bind(this)}
+    />
+    <input
+      type='button'
+      value='Add Language'
+      onClick={props.addField.bind(this)}
+    />{' '}
+    <br />
   </div>
 );
 

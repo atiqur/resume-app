@@ -25,32 +25,21 @@ const ResumeView = props => {
       <hr />
       <h2>Professional Experience</h2>
       {props.experience.map(e => {
+        let textDurationStartDate, textDurationEndDate;
         if (!e.durationStartDate) {
-          var textDurationStartDate = '';
+          textDurationStartDate = '';
         } else {
-          var textDurationStartDate = e.durationStartDate.toLocaleDateString(
+          textDurationStartDate = e.durationStartDate.toLocaleDateString(
             'en-IN'
           );
         }
         if (!e.durationEndDate) {
-          var textDurationEndDate = '';
+          textDurationEndDate = '';
         } else {
-          var textDurationEndDate =
+          textDurationEndDate =
             ' to ' + e.durationEndDate.toLocaleDateString('en-IN');
         }
 
-        // let text = `Company: ${e.companyName} \n
-        //   Designation: ${e.designation} \n
-        //   Key Responsibilities: ${e.keyResponsibilities} \n
-        //   Duration From: ${textDurationStartDate} to ${textDurationEndDate} \n
-        //   Current Company: ${e.isCurrentCompany} \n
-        //   `;
-
-        // let textInNewLines = text.split('\n').map(i => {
-        //   return <p>{i}</p>;
-        // });
-
-        // return textInNewLines;
         return (
           <div>
             <p>
@@ -112,7 +101,11 @@ const ResumeView = props => {
       {props.gender} <br />
       {props.maritalStatus} <br />
       {props.hobbies} <br />
-      {props.languagesKnown} <br />
+      Languages Known:{' '}
+      {props.languagesKnown
+        .map(language => (language === undefined ? '' : `${language}`))
+        .join(', ')}{' '}
+      <br />
       <hr />
     </div>
   );

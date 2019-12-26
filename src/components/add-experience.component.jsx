@@ -1,6 +1,5 @@
 import React from 'react';
 import DatePicker from 'react-date-picker';
-import AddProject from './add-project.component';
 
 const AddExperience = props => {
   return props.stateValue.map((e, i) => (

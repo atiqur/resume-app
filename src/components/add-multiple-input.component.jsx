@@ -30,6 +30,8 @@ const AddMultipleInput = props => {
           />
         </div>
       );
+    default:
+      return null;
   }
 };
 
