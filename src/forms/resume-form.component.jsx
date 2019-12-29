@@ -7,6 +7,8 @@ import AddMultipleInput from '../components/add-multiple-input.component';
 import AddExperience from '../components/add-experience.component';
 import AddEducation from '../components/add-education.component';
 import AddPersonalDetails from '../components/add-personal-details.component';
+import AddText from '../components/add-text.component';
+import RichTextEditor from 'react-rte';
 
 class ResumeForm extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class ResumeForm extends React.Component {
       candidateName: '',
       candidateMobileNos: [undefined],
       candidateEmail: [undefined],
-      objective: '',
+      objective: RichTextEditor.createEmptyValue(),
       experience: [
         {
           companyName: '',
@@ -45,7 +47,7 @@ class ResumeForm extends React.Component {
           aggregate: ''
         }
       ],
-      otherSkills: '',
+      otherSkills: RichTextEditor.createEmptyValue(),
       dateOfBirth: undefined,
       gender: '',
       maritalStatus: '',
@@ -58,6 +60,8 @@ class ResumeForm extends React.Component {
     this.handleExperience = this.handleExperience.bind(this);
     this.handleEducation = this.handleEducation.bind(this);
     this.handleLanguage = this.handleLanguage.bind(this);
+    this.handleObjective = this.handleObjective.bind(this);
+    this.handleOtherSkills = this.handleOtherSkills.bind(this);
   }
 
   handleMobileNos(i, event) {
@@ -97,10 +101,6 @@ class ResumeForm extends React.Component {
   }
 
   handleLanguage(i, event) {
-    // const value =
-    // event.target.type === 'checkbox'
-    //   ? event.target.checked
-    //   : event.target.value;
     let languagesKnown = [...this.state.languagesKnown];
     languagesKnown[i] = event.target.value;
     this.setState({ languagesKnown });
@@ -165,6 +165,14 @@ class ResumeForm extends React.Component {
     this.setState({ education });
   }
 
+  handleObjective(value) {
+    this.setState({ objective: value });
+  }
+
+  handleOtherSkills(value) {
+    this.setState({ otherSkills: value });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
   }
@@ -220,13 +228,9 @@ class ResumeForm extends React.Component {
             <hr />
             <div className='objective'>
               <h2 className='section-header'>Objective</h2>
-              <AddMultipleInput
-                name='objective'
-                type='textarea'
-                cols='30'
-                rows='10'
-                value={this.state.objective}
-                eventHandler={this.handleChange.bind(this)}
+              <AddText
+                state={this.state.objective}
+                onChange={this.handleObjective.bind(this)}
               />
             </div>{' '}
             <br />
@@ -276,13 +280,9 @@ class ResumeForm extends React.Component {
             {/* Other Skills */}
             <div className='other-skills'>
               <h2 className='section-header'>Other Skills</h2>
-              <textarea
-                name='otherSkills'
-                id='otherSkills'
-                cols='30'
-                rows='10'
-                value={this.state.otherSkills}
-                onChange={this.handleChange}
+              <AddText
+                state={this.state.otherSkills}
+                onChange={this.handleOtherSkills.bind(this)}
               />
               <hr />
             </div>

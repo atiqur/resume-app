@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './resume-view.styles.css';
+import HtmlComponent from '../components/html-parser.component';
 
 const ResumeView = props => {
   return (
@@ -21,7 +22,8 @@ const ResumeView = props => {
       <br />
       <hr />
       <h2>Objective</h2>
-      {props.objective} <br /> <br />
+      <HtmlComponent state={props.objective} />
+      <br /> <br />
       <hr />
       <h2>Professional Experience</h2>
       {props.experience.map(e => {
@@ -91,7 +93,8 @@ const ResumeView = props => {
       ))}
       <hr />
       <h2>Other Skills</h2>
-      {props.otherSkills} <br />
+      <HtmlComponent state={props.otherSkills} />
+      <br />
       <hr />
       <h2>Personal Details</h2>
       {props.dateOfBirth

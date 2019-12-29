@@ -1,16 +1,9 @@
 import React from 'react';
+import RichTextEditor from 'react-rte';
 
 const AddText = props => {
   return (
-    <div className='mobileNo'>
-      <input
-        type={props.type}
-        name={props.name}
-        value={props.value}
-        onChange={props.onChange}
-      />
-      <br />{' '}
-    </div>
+    <RichTextEditor value={props.state} onChange={props.onChange.bind(this)} />
   );
 };
 
