@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-date-picker';
+import AddText from '../components/add-text.component';
 
 const AddExperience = props => {
   return props.stateValue.map((e, i) => (
@@ -56,13 +57,11 @@ const AddExperience = props => {
       )}{' '}
       <br />
       <label>Key Responsibilities: </label> <br />
-      <textarea
+      <AddText
         name='keyResponsibilities'
-        cols='30'
-        rows='10'
-        value={e.keyResponsibilities || ''}
-        onChange={props.onChange.bind(this, i)}
-      />{' '}
+        state={e.keyResponsibilities}
+        onChange={value => props.handleKeyResponsibilities(value, i)}
+      />
       <br />
       {/* <AddProject
         name='projects'

@@ -3,7 +3,11 @@ import RichTextEditor from 'react-rte';
 
 const AddText = props => {
   return (
-    <RichTextEditor value={props.state} onChange={props.onChange.bind(this)} />
+    <RichTextEditor
+      name={props.name}
+      value={props.state}
+      onChange={props.onChange}
+    />
   );
 };
 

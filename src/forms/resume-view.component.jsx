@@ -62,8 +62,8 @@ const ResumeView = props => {
               {textDurationEndDate}
             </p>
             <p>
-              <strong>Key Responsibilities: </strong>
-              {e.keyResponsibilities}
+              <strong>Key Responsibilities: </strong> <br />
+              <HtmlComponent state={e.keyResponsibilities} />
             </p>
           </div>
         );

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
 import ResumeView from './resume-view.component';
 import AddInput from '../components/add-input';
-import AddMultipleInput from '../components/add-multiple-input.component';
 import AddExperience from '../components/add-experience.component';
 import AddEducation from '../components/add-education.component';
 import AddPersonalDetails from '../components/add-personal-details.component';
@@ -26,7 +25,7 @@ class ResumeForm extends React.Component {
           durationStartDate: undefined,
           isCurrentCompany: false,
           durationEndDate: undefined,
-          keyResponsibilities: ''
+          keyResponsibilities: RichTextEditor.createEmptyValue()
           // hasProjects: true,
           // projects: [
           //   {
@@ -57,7 +56,15 @@ class ResumeForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleMobileNos = this.handleMobileNos.bind(this);
+    this.removeMobile = this.removeMobile.bind(this);
+    this.addMobile = this.addMobile.bind(this);
+    this.handleEmails = this.handleEmails.bind(this);
+    this.removeEmail = this.removeEmail.bind(this);
+    this.addEmail = this.addEmail.bind(this);
+    this.handleObjective = this.handleObjective.bind(this);
     this.handleExperience = this.handleExperience.bind(this);
+    this.removeExperience = this.removeExperience.bind(this);
     this.handleEducation = this.handleEducation.bind(this);
     this.handleLanguage = this.handleLanguage.bind(this);
     this.handleObjective = this.handleObjective.bind(this);
@@ -134,9 +141,18 @@ class ResumeForm extends React.Component {
     this.setState({ experience });
   }
 
+  handleKeyResponsibilities(value, i) {
+    let experience = [...this.state.experience];
+    experience[i].keyResponsibilities = value;
+    this.setState({ experience });
+  }
+
   addExperience() {
     this.setState(prevState => ({
-      experience: [...prevState.experience, {}]
+      experience: [
+        ...prevState.experience,
+        { keyResponsibilities: RichTextEditor.createEmptyValue() }
+      ]
     }));
   }
 
@@ -165,12 +181,12 @@ class ResumeForm extends React.Component {
     this.setState({ education });
   }
 
-  handleObjective(value) {
-    this.setState({ objective: value });
+  handleObjective(objective) {
+    this.setState({ objective });
   }
 
-  handleOtherSkills(value) {
-    this.setState({ otherSkills: value });
+  handleOtherSkills(otherSkills) {
+    this.setState({ otherSkills });
   }
 
   handleSubmit(event) {
@@ -198,14 +214,14 @@ class ResumeForm extends React.Component {
                 type={'number'}
                 name={'Mobile'}
                 label={'Mobile'}
-                eventHandler={this.handleMobileNos.bind(this)}
+                eventHandler={this.handleMobileNos}
                 stateField={this.state.candidateMobileNos}
-                removeField={this.removeMobile.bind(this)}
+                removeField={this.removeMobile}
               />
               <input
                 type='button'
                 value='Add Mobile'
-                onClick={this.addMobile.bind(this)}
+                onClick={this.addMobile}
               />{' '}
               <br />
               <label htmlFor='email'>Email ID: </label> <br />
@@ -213,15 +229,11 @@ class ResumeForm extends React.Component {
                 type={'email'}
                 name={'Email'}
                 label={'Email'}
-                eventHandler={this.handleEmails.bind(this)}
+                eventHandler={this.handleEmails}
                 stateField={this.state.candidateEmail}
-                removeField={this.removeEmail.bind(this)}
+                removeField={this.removeEmail}
               />
-              <input
-                type='button'
-                value='Add Email'
-                onClick={this.addEmail.bind(this)}
-              />{' '}
+              <input type='button' value='Add Email' onClick={this.addEmail} />{' '}
               <br />
             </div>{' '}
             <br />
@@ -229,8 +241,9 @@ class ResumeForm extends React.Component {
             <div className='objective'>
               <h2 className='section-header'>Objective</h2>
               <AddText
+                name='objective'
                 state={this.state.objective}
-                onChange={this.handleObjective.bind(this)}
+                onChange={this.handleObjective}
               />
             </div>{' '}
             <br />
@@ -239,7 +252,12 @@ class ResumeForm extends React.Component {
               <h2 className='section-header'>Professional Experience</h2>
               <AddExperience
                 stateValue={this.state.experience}
-                onChange={this.handleExperience.bind(this)}
+                onChange={this.handleExperience}
+                handleKeyResponsibilities={(value, i) => {
+                  let experience = [...this.state.experience];
+                  experience[i].keyResponsibilities = value;
+                  this.setState({ experience });
+                }}
                 changeStartDate={(value, i) => {
                   let experience = [...this.state.experience];
                   experience[i].durationStartDate = new Date(value);
@@ -250,7 +268,7 @@ class ResumeForm extends React.Component {
                   experience[i].durationEndDate = new Date(value);
                   this.setState({ experience });
                 }}
-                removeExperience={this.removeExperience.bind(this)}
+                removeExperience={this.removeExperience}
               />
               <br />
               <input
@@ -281,6 +299,7 @@ class ResumeForm extends React.Component {
             <div className='other-skills'>
               <h2 className='section-header'>Other Skills</h2>
               <AddText
+                name='otherSkills'
                 state={this.state.otherSkills}
                 onChange={this.handleOtherSkills.bind(this)}
               />
