@@ -7,6 +7,10 @@
   background-color: bisque;
 }
 
+.resume-form textarea {
+  width: 80%;
+  height: 100px;
+}
 .resume-view {
   background-color: aqua;
 }

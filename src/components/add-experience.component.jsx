@@ -15,8 +15,9 @@ const AddExperience = props => {
       <input
         type='checkbox'
         name='isCurrentCompany'
-        value={e.isCurrentCompany || ''}
+        value={e.isCurrentCompany}
         onChange={props.onChange.bind(this, i)}
+        disabled={props.stateValue.isCurrentCompany}
       />{' '}
       <label htmlFor='isCurrentCompany'>Current Company</label>
       <br />

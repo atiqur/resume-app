@@ -51,7 +51,8 @@ class ResumeForm extends React.Component {
       gender: '',
       maritalStatus: '',
       hobbies: '',
-      languagesKnown: ['English', 'Hindi']
+      languagesKnown: ['English', 'Hindi'],
+      remark: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -315,6 +316,14 @@ class ResumeForm extends React.Component {
               removeLanguage={this.removeLanguage.bind(this)}
               addField={this.addLanguage.bind(this)}
             />
+            <hr />
+            <label htmlFor='remark'>Remark: </label> <br />
+            <textarea
+              name='remark'
+              value={this.state.remark}
+              onChange={this.handleChange}
+            />{' '}
+            <br />
             <Link className='resume-form-button'>
               <button>
                 <h3>Next --></h3>

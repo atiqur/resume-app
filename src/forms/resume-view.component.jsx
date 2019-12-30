@@ -110,6 +110,8 @@ const ResumeView = props => {
         .join(', ')}{' '}
       <br />
       <hr />
+      <h2>Remark: </h2>
+      <p className='remark'>{props.remark}</p>
     </div>
   );
 };
