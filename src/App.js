@@ -6,6 +6,7 @@ import './App.css';
 // import HomePage from './pages/homepage.component';
 import ResumeForm from './forms/resume-form.component';
 import Header from './components/header/header.component';
+import ResumeViewPage from './forms/resume-view-page.component';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path='/' component={ResumeForm} />
+        <Route path='/view' render={props => <ResumeViewPage {...props} />} />
       </Switch>
     </div>
   );

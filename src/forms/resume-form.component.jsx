@@ -324,7 +324,10 @@ class ResumeForm extends React.Component {
               onChange={this.handleChange}
             />{' '}
             <br />
-            <Link className='resume-form-button'>
+            <Link
+              className='resume-form-button'
+              to={{ pathname: '/view', ...this.state }}
+            >
               <button>
                 <h3>Next --></h3>
               </button>
