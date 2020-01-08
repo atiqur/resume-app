@@ -1,6 +1,6 @@
 .resume-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr; */
 }
 
 .resume-form {
@@ -12,5 +12,5 @@
   height: 100px;
 }
 .resume-view {
-  background-color: aqua;
+  /* background-color: aqua; */
 }

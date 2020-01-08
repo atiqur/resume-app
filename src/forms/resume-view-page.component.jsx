@@ -1,6 +1,6 @@
 import React from 'react';
-
-import './resume-view.styles.css';
+import { Link } from 'react-router-dom';
+import './resume-view-page.styles.css';
 import HtmlComponent from '../components/html-parser.component';
 
 const ResumeViewPage = props => {
@@ -112,6 +112,12 @@ const ResumeViewPage = props => {
       <hr />
       <h2>Remark: </h2>
       <p className='remark'>{props.location.remark}</p>
+      <br />
+      <Link className='resume-form-button' to={{ pathname: '/edit', ...props }}>
+        <button>
+          <h3>Edit</h3>
+        </button>
+      </Link>
     </div>
   );
 };

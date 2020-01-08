@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './resume-form.styles.css';
-import ResumeView from './resume-view.component';
 import AddInput from '../components/add-input';
 import AddExperience from '../components/add-experience.component';
 import AddEducation from '../components/add-education.component';
@@ -326,7 +325,7 @@ class ResumeForm extends React.Component {
             <br />
             <Link
               className='resume-form-button'
-              to={{ pathname: '/view', ...this.state }}
+              to={{ pathname: '/pdf', ...this.state }}
             >
               <button>
                 <h3>Next --></h3>
@@ -334,7 +333,7 @@ class ResumeForm extends React.Component {
             </Link>
           </form>
         </div>
-        <ResumeView {...this.state} />
+        {/* <ResumeView {...this.state} /> */}
       </div>
     );
   }
